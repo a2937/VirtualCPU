@@ -23,7 +23,12 @@ public class VirtualCPU
 
     private byte x = 0;
 
-    private byte[] memory = new byte[16];
+    private byte y = 0;
+
+    private boolean equalBit = false;
+
+
+    private byte[] memory = new byte[256];
 
     /**
      * Instantiates a new Virtual cpu.
@@ -74,15 +79,22 @@ public class VirtualCPU
      */
     public byte[] getMemory()
     {
-       return Arrays.copyOf(memory,16);
+       return Arrays.copyOf(memory,256);
     }
 
     private void initializeOpCodes()
     {
         opCodes.add(new OpCode(1,OpCodeTypes.BRK)); //Break
-        opCodes.add(new OpCode(2,OpCodeTypes.LDA)); // Load
-        opCodes.add(new OpCode(2,OpCodeTypes.STA)); //Store
-        opCodes.add(new OpCode(2,OpCodeTypes.ADC)); //Add
+        opCodes.add(new OpCode(2,OpCodeTypes.LDA)); // Load register a
+        opCodes.add(new OpCode(2,OpCodeTypes.STA)); //Store register a
+        opCodes.add(new OpCode(2,OpCodeTypes.ADC)); //Add register a
+        opCodes.add(new OpCode(2,OpCodeTypes.LDX)); // Loads the value of next memory address into register x
+        opCodes.add(new OpCode(1,OpCodeTypes.INX)); // Increment register X
+        opCodes.add(new OpCode(2,OpCodeTypes.CMY)); // Compare register y to the current value and store the result
+        opCodes.add(new OpCode(2,OpCodeTypes.BNE)); // add the value in the next memory address to the program counter if the equal flag is not set
+        opCodes.add(new OpCode(1,OpCodeTypes.STA_X)); // Store the value in the A register in the memory location pointed to by the X register
+        opCodes.add(new OpCode(1,OpCodeTypes.DEY)); // Decrement register y
+        opCodes.add(new OpCode(2,OpCodeTypes.LDY)); // Load the value of the next memory address into register Y
     }
 
 
@@ -145,6 +157,22 @@ public class VirtualCPU
                     System.err.println(nfe.getLocalizedMessage());
                 }
             }
+            else if(operation.getOpcode() == OpCodeTypes.LDX)
+            {
+
+                //Load value into x
+                try
+                {
+
+                    int valueToLoad = HexDecimalToDecimal(words[1].substring(2));
+                    x = (byte)valueToLoad;
+                    System.out.println(x);
+                }
+                catch(NumberFormatException nfe)
+                {
+                    System.err.println(nfe.getLocalizedMessage());
+                }
+            }
             else if(operation.getOpcode() == OpCodeTypes.ADC)
             {
                 //Add value to A
@@ -158,6 +186,23 @@ public class VirtualCPU
                 {
                     System.err.println(nfe.getLocalizedMessage());
                 }
+            }
+            else if(operation.getOpcode() == OpCodeTypes.INX)
+            {
+                //Increment x
+                x++;
+            }
+            else if(operation.getOpcode() == OpCodeTypes.DEY)
+            {
+                //Decrement y
+                y--;
+            }
+            else if(operation.getOpcode() == OpCodeTypes.CMY)
+            {
+                //Compare register y to the value in the next
+                //memory address and store the result in the equal flag
+
+                equalBit = (y == HexDecimalToDecimal(words[1].substring(2)));
             }
             else if(operation.getOpcode() == OpCodeTypes.STA)
             {
