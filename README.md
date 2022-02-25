@@ -2,7 +2,7 @@
 
 A JavaFX program designed to parse and read assembly instructions similar to the ones for the 6502 chip. While not a
 true emulator that I had some interest in trying to make; it does read files and perform operations on internal
-registers.
+registers. Users can open handmade instructions on their computer ,and reach one sequentially to see what would happen.
 
 ## What does it do exactly?
 
@@ -31,8 +31,6 @@ It consists of a humble menu bar and four labels. At this current time; a table 
 array seems highly unlikely as an array of 256 positions each with a value and position would take up an excessive
 amount of space in JavaFX.
 
-## What was it built with?
-
 ## Built With
 
 * [JavaFX](https://openjfx.io/openjfx-docs/) - The view framework used
@@ -50,6 +48,19 @@ A few sample command files were provided to test simpler commands such as the ab
 and decrement.
 
 Reflection was also used to check if numbers could correctly be retrieved.
+
+## Authors
+
+* **Aaron Cottrill** - *Initial work* - [a2937](https://github.com/a2937)
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see
+the [tags on this repository](https://github.com/a2937/VirtualCPU/tags).
+
+## Deployment
+
+Use the "jar" gradle task to build a deployable version of this program.
 
 ## License
 
