@@ -60,7 +60,9 @@ the [tags on this repository](https://github.com/a2937/VirtualCPU/tags).
 
 ## Deployment
 
-Use the "jar" gradle task to build a deployable version of this program.
+Use the "jlink" gradle task to build a deployable version of this program. This is because of Java 11's module based
+system. The JLink task modifies the Java Runtime environment in order to add the JavaFX dependencies back where they
+belong. Log4J unfortunately did not use the dependency module setup and was unfortunately difficult to deal with.
 
 ## License
 

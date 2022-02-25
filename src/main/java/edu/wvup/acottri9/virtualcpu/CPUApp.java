@@ -2,7 +2,6 @@ package edu.wvup.acottri9.virtualcpu;
 
 import javafx.application.Application;
 
-import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
