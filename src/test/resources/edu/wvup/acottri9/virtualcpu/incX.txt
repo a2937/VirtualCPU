@@ -1,0 +1,3 @@
+LDX #$64
+INX
+BRK
